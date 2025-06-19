@@ -6,5 +6,6 @@ RUN pip install matplotlib
 WORKDIR /app
 #copy our application
 COPY run.sh /app/run.sh
+RUN chmod 744 /app/run.sh
 #start the bot application
 CMD ["/app/run.sh"]
