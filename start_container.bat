@@ -1,0 +1,1 @@
+docker run -d --restart always --name ciscobanfi_bot ciscobanfi_image
