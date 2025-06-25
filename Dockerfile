@@ -1,7 +1,8 @@
-# Use the official lightweight Python image
-FROM python:3.12-slim
+# Use the official lightweight Python image (this image has already python in it)
+FROM python:3.12-slim 
 #install all python libraries
 RUN pip install matplotlib
+RUN pip install webexteamssdk
 #set the working directory
 WORKDIR /app
 #copy our application
