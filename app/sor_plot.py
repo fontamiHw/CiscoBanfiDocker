@@ -1,39 +1,66 @@
 import json
 import matplotlib.pyplot as plt
-fig, ax = plt.subplots()
+
 
 class Sor_plot(object):
-    def __init__(self):
-        self.open_route = "C:/otdr_data/SOR/"
-        self.save_route = "C:/otdr_data/SVG/"
-        self.filename1 = "sample-340.sor"
+    def __init__(self, sor_file):
+        self.open_route = "/data/host/SOR/"
+        self.save_route_svg = "/data/host/SVG/"
+        self.save_route_jpg= "/data/host/JPG/"
         self.filename2 = "metadata_sor.sor"
-        self.data = None
+        self.sor_file = sor_file.replace(".sor", ".json")
+        self.svg_filename = self.save_route_svg+sor_file.replace(".sor", ".svg")
+        self.jpg_filename = self.save_route_svg+sor_file.replace(".sor", ".jpg")
+        
     
-    def convert_json(self, filename):
-        return filename.replace(".sor", ".json")
+
         
-    def save_svg(self):
-        fig.savefig(self.save_route+"sample-340.svg", format="svg")
-        plt.show()
+    def save_svg(self, filename:str, ax):
+        ax.savefig(self.svg_filename, format="svg")
+        ax.savefig(self.jpg_filename, format="jpg")
+        return self.jpg_filename
         
-    ## FILE 1
-    def exec_file1(self):
-        with open(self.open_route + self.convert_json(self.filename1), 'r') as file:
-            self.data = json.load(file)
+    ## Graph
+    def plot_graph(self):
+        with open(self.open_route + self.sor_file, 'r') as file:
+            data = json.load(file)    
+        
+         # Extract frequency and power values
+        frequencies = [point["km"] for point in data["points"]]
+        powers = [point["loss"] for point in data["points"]]
+        ml_elements = [point.get("otdr_events", "") for point in data["points"]]
 
-        km = []
-        loss = []
+        #Clean previous picture
+        plt.clf()
+        
+        plt.plot(frequencies, powers, linewidth=0.5, color='green')
+        # Create the plot
+        plt.plot(frequencies, powers)
 
-        for el in self.data:
-            km.append(el["km"])
-            loss.append(el["loss"])
+        # Add labels and title    
+        plt.xlabel("Location (km)")
+        plt.ylabel("Magnitude (dB)")
+        plt.title(self.sor_file)
 
-        ax.plot(km, loss)
-        ax.grid()
-        ax.set(xlabel="Location (km)", ylabel="Magnitude (dB)", title="sample-340.svg")
+        # Annotate points with non-empty 'ml' labels
+        for i, ml in enumerate(ml_elements):
+            if ml:
+                plt.annotate(ml, (frequencies[i], powers[i]))
 
-    ## FILE 2
+
+        # Set the size of the window
+        manager = plt.get_current_fig_manager()
+        #manager.window.state('zoomed')
+        manager.resize(1920, 1080)
+        
+        # Show the plot
+        #plt.show() 
+        
+        picture = self.save_svg(self.sor_file, plt);
+        plt.close()
+        return picture
+
+    ## Event
     def exec_file2(self):
         with open(self.open_route + self.convert_json(self.filename2), 'r') as file:
             self.data = json.load(file)
@@ -52,13 +79,7 @@ class Sor_plot(object):
             x = [valx, valx]
             y = [0, 50]
 
-            ax.plot(x, y, color="red", linewidth=0.5)
+            self.ax.plot(x, y, color="red", linewidth=0.5)
             i+=1
             plt.text(valx, 50, "Event "+str(i))
             
-### MAIN ##################################################
-
-plot = Sor_plot()
-plot.exec_file1()
-plot.exec_file2()
-plot.save_svg()
