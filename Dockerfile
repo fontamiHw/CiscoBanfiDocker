@@ -18,7 +18,7 @@ RUN mkdir -p ${APP_ROOT_HOST}
 
 #copy our application
 COPY run.sh /app/run.sh
-COPY app/*.py /app/.
+COPY app /app
 RUN chmod 744 /app/run.sh
 #start the bot application
 CMD ["/app/run.sh"]

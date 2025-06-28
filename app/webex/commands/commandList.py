@@ -9,7 +9,7 @@ import os
 class CommandList(Command):
 
     def __init__(self, api:WebexTeamsAPI):
-        command = "list "
+        command = "list"
         super().__init__(
             command_keyword=command,
             help_message=f"{command}: Return the list of the available SOR file.",
