@@ -29,9 +29,9 @@ class CommandList(Command):
         for i, f in enumerate(sor_files):
             sor_str += f
             if (i + 1) % 2 == 0 and i != len(sor_files) - 1:
-                sor_str += '\n'
+                sor_str += '\n\n'
             elif i != len(sor_files) - 1:
                 sor_str += ', '
                 
-        return quote_info(f"Available SOR files:\n{sor_str}" if sor_str else "No SOR files found.")
+        return f"Available SOR files:\n{sor_str}" if sor_str else "No SOR files found."
 
