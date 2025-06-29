@@ -27,11 +27,12 @@ class CommandList(Command):
         # Join sor_files into a single string, adding '\n' after every 2 elements
         sor_str = ""
         for i, f in enumerate(sor_files):
-            sor_str += f
+            sor_str += f"- {f}"
             if (i + 1) % 2 == 0 and i != len(sor_files) - 1:
                 sor_str += '\n\n'
             elif i != len(sor_files) - 1:
-                sor_str += ', '
+                sor_str += ' '
+            
                 
-        return f"Available SOR files:\n{sor_str}" if sor_str else "No SOR files found."
+        return f"***Available SOR :*** \n{sor_str}" if sor_str else "No SOR files found."
 
