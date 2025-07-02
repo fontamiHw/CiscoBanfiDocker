@@ -1,12 +1,13 @@
 import json
 import matplotlib.pyplot as plt
+from config import Config
 
 
 class Sor_plot(object):
     def __init__(self, sor_file):
-        self.open_route = "/data/host/SOR/"
-        self.save_route_svg = "/data/host/SVG/"
-        self.save_route_jpg= "/data/host/JPG/"
+        self.open_route = Config.get_open_route
+        self.save_route_svg = Config.get_save_route_svg
+        self.save_route_jpg= Config.get_save_route_jpg
         self.filename2 = "metadata_sor.sor"
         self.sor_file = sor_file.replace(".sor", ".json")
         self.svg_filename = self.save_route_svg+sor_file.replace(".sor", ".svg")

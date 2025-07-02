@@ -4,7 +4,7 @@ from webexteamssdk import WebexTeamsAPI
 from webexteamssdk.models.immutable import Message
 import logging
 import os
-
+from config import Config
 
 class CommandList(Command):
 
@@ -15,7 +15,7 @@ class CommandList(Command):
             help_message=f"{command}: Return the list of the available SOR file.",
         )
         self.api = api        
-        self.open_route = "/data/host/SOR/"
+        self.open_route = Config.get_open_route
 
     def execute(self, message, attachment_actions:Message, activity):    
         sor_files = []
