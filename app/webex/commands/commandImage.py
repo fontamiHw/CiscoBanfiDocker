@@ -1,6 +1,5 @@
 from webex_bot.models.command import Command
-from sor_plot import Sor_plot
-from webex_bot.models.command import Command
+from plot.sor_plot import Sor_plot
 from webex_bot.formatting import quote_info
 from webexteamssdk import WebexTeamsAPI
 from webexteamssdk.models.immutable import Message

@@ -1,5 +1,7 @@
 import os
-from Banfibot import BanfiBot
+from webex.Banfibot import BanfiBot
+
+
 def main():
     print("bot starting")
 
